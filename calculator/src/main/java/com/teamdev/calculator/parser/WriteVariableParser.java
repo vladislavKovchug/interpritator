@@ -30,7 +30,7 @@ public class WriteVariableParser implements ExpressionParser {
 
         return new EvaluationCommand() {
             @Override
-            public void execute(EvaluationContext outputContext) {
+            public void execute(final EvaluationContext outputContext) {
                 outputContext.setActualCloser(new EvaluationContextCloser() {
                     @Override
                     public void closeContext(EvaluationStack stack) {

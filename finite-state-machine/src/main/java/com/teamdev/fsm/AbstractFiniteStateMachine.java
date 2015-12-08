@@ -8,10 +8,11 @@ public abstract class AbstractFiniteStateMachine<
         Input extends InputContext,
         Output extends OutputContext,
         State extends MachineState,
-        Command extends StateTransitionCommand<Output>,
-        Acceptor extends StateAcceptor<Input, Output, Command>,
-        Matrix extends TransitionMatrix<State>,
-        Error extends Exception> {
+        Error extends Exception,
+        Command extends StateTransitionCommand<Output, Error>,
+        Acceptor extends StateAcceptor<Error, Input, Output, Command>,
+        Matrix extends TransitionMatrix<State>
+        > {
 
     public void run(Input inputContext, Output outputContext) throws Error {
 
@@ -31,7 +32,7 @@ public abstract class AbstractFiniteStateMachine<
     }
 
     private State moveForward(State currentState,
-                              Input inputContext, Output outputContext) {
+                              Input inputContext, Output outputContext) throws Error {
 
         final Set<State> possibleTransitions = getTransitionMatrix().
                 getPossibleTransitions(currentState);

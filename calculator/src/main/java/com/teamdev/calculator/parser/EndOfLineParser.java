@@ -1,16 +1,13 @@
 package com.teamdev.calculator.parser;
 
-import com.teamdev.calculator.EvaluationCommand;
-import com.teamdev.calculator.EvaluationContext;
-import com.teamdev.calculator.ExpressionParser;
-import com.teamdev.calculator.MathExpressionReader;
+import com.teamdev.calculator.*;
 
 public class EndOfLineParser implements ExpressionParser {
 
     public static final String DELIMITER = ";";
 
     @Override
-    public EvaluationCommand accept(MathExpressionReader reader) {
+    public EvaluationCommand accept(final MathExpressionReader reader) {
 
         if (!reader.hasMoreElements()) {
             return null;
@@ -24,11 +21,16 @@ public class EndOfLineParser implements ExpressionParser {
 
         return new EvaluationCommand() {
             @Override
-            public void execute(EvaluationContext outputContext) {
+            public void execute(EvaluationContext outputContext) throws CalculationError {
 
                 if (outputContext.getEvaluationStack().getParent() != null) {
                     outputContext.closeCurrentContext();
                 }
+
+                if(outputContext.getEvaluationStack().getParent() != null){
+                    throw new CalculationError("Error Not closed brackets", reader.getPosition());
+                }
+
             }
         };
     }

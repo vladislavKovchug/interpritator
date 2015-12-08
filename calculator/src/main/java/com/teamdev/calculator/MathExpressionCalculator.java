@@ -10,10 +10,11 @@ public class MathExpressionCalculator extends AbstractFiniteStateMachine<
         MathExpressionReader,
         EvaluationContext,
         CalculationState,
+        CalculationError,
         EvaluationCommand,
         ExpressionParser,
-        CalculationMatrix,
-        CalculationError>
+        CalculationMatrix
+        >
 
         implements Calculator {
 
